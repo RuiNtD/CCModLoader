@@ -120,15 +120,24 @@ CCModLoader.launch = function () {
   };
 
   CCModLoader.getOptionsMenu = function () {
-    var WriteButton = function (patchName, button, on, off, callback, invert) {
-      var invert = invert ? 1 : 0;
-      if (!callback) callback = "";
-      callback += "PlaySound('snd/tick.mp3');";
-      return (
-        '<a class="option" id="" ' + Game.clickStr + '="' + callback + '"></a>'
-      );
-    };
-    return '<div class="listing">Placeholder options menu</div>';
+    var options = [];
+    //options.push('<div class="listing">Placeholder options menu</div>');
+    options.push('<a class="option');
+    if (!CCModLoader.config.saveHack) options.push(" off");
+    options.push(" " + Game.clickStr);
+    options.push(
+      "=\"CCModLoader.toggleSaveHack(); PlaySound('snd/tick.mp3');\">Save Injection</a>"
+    );
+    options.push(
+      // '<label>Modifies your bakery name to include a "hack" that loads CC Mod Loader automatically when your file loads.</label>'
+      "<label>Saves CC Mod Loader onto your save file so it's automatically loaded when your file loads.</label>"
+    );
+    return options.join("");
+  };
+
+  CCModLoader.toggleSaveHack = function () {
+    CCModLoader.config.saveHack = !CCModLoader.config.saveHack;
+    Game.toSave = true;
   };
 
   CCModLoader.countNotif = function () {
