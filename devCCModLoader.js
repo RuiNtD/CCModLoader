@@ -128,7 +128,6 @@ CCModLoader.launch = function () {
 
   CCModLoader.toggleSaveHack = function () {
     CCModLoader.config.saveHack = !CCModLoader.config.saveHack;
-    Game.toSave = true;
     var btn = document.getElementById("CCModLoader-savehack");
     if (btn)
       btn.className = "option" + (CCModLoader.config.saveHack ? "" : " off");
