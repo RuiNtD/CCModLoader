@@ -114,7 +114,7 @@ CCModLoader.launch = function () {
     options.push('<div class="listing">');
     options.push('<a class="option');
     if (!CCModLoader.config.saveHack) options.push(" off");
-    options.push('" ' + Game.clickStr);
+    options.push('" id="CCModLoader-savehack" ' + Game.clickStr);
     options.push(
       "=\"CCModLoader.toggleSaveHack(); PlaySound('snd/tick.mp3');\">Save Injection</a>"
     );
@@ -129,6 +129,9 @@ CCModLoader.launch = function () {
   CCModLoader.toggleSaveHack = function () {
     CCModLoader.config.saveHack = !CCModLoader.config.saveHack;
     Game.toSave = true;
+    var btn = document.getElementById("CCModLoader-savehack");
+    if (btn)
+      btn.className = "option" + (CCModLoader.config.saveHack ? "" : " off");
   };
 
   CCModLoader.countNotif = function () {
