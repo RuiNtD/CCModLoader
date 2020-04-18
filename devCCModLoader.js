@@ -74,13 +74,16 @@ CCModLoader.launch = function () {
   };
 
   CCModLoader.saveConfig = function () {
-    CCSE.save.OtherMods.CCModLoader = CCModLoader.config;
+    Game.localStorageSet("CCModLoader", JSON.stringify(CCModLoader.config));
   };
 
   CCModLoader.loadConfig = function () {
     CCModLoader.config = CCModLoader.defaultConfig();
-    if (CCSE.save.OtherMods.CCModLoader) {
-      var config = CCSE.save.OtherMods.CCModLoader;
+    if (Game.localStorageGet("CCModLoader")) {
+      var config = {};
+      try {
+        config = JSON.parse(Game.localStorageGet("CCModLoader"));
+      } catch {}
       for (var pref in config) {
         CCModLoader.config[pref] = config[pref];
       }
