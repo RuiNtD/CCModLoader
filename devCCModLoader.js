@@ -2,6 +2,7 @@
  * @prettier
  */
 
+Game.Win("Third-party");
 if (CCModLoader === undefined) var CCModLoader = {};
 if (typeof CCSE == "undefined")
   Game.LoadMod("https://klattmose.github.io/CookieClicker/CCSE.js");
@@ -135,10 +136,17 @@ CCModLoader.launch = function () {
 
   CCModLoader.countNotif = function () {
     var count = CCModLoader.modCount;
-    var notif = "Loading " + count + " mods...";
-    if (count == 1) notif = "Loading " + count + " mod...";
-    if (Game.prefs.popups) Game.Popup(notif);
-    else Game.Notify(CCModLoader.name, notif, [16, 5], 5);
+    var title = count + " Mods Auto-Loaded";
+    var desc = "Configure CC Mod Loader in Options";
+    if (count == 1) title = "1 Mod Auto-Loaded";
+    var popup = title;
+    if (count == 0) {
+      title = "Welcome to CC Mod Loader";
+      desc = "Configure your mods in Options";
+      popup = "No Mods Auto-Loaded";
+    }
+    if (Game.prefs.popups) Game.Popup(popup);
+    else Game.Notify(title, desc, [16, 5], 5);
   };
 
   if (
