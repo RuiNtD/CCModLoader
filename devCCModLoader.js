@@ -55,6 +55,7 @@ CCModLoader.launch = function () {
           Game.bakeryName +
           '" onerror=\'Game.LoadMod("' +
           CCModLoader.modURL +
+          (CCModLoader.config.cacheBypass ? "?" + Math.random() : "") +
           "\")' />";
   };
 
@@ -89,6 +90,7 @@ CCModLoader.launch = function () {
     return {
       autoLoad: true,
       saveHack: false,
+      cacheBypass: false, // hidden setting
       mods: [],
     };
   };
@@ -116,9 +118,7 @@ CCModLoader.launch = function () {
     options.push('<a class="option');
     if (!CCModLoader.config.saveHack) options.push(" off");
     options.push('" id="CCModLoader-savehack" ' + Game.clickStr);
-    options.push(
-      "=\"CCModLoader.toggleSaveHack(); PlaySound('snd/tick.mp3');\">Save Injection</a>"
-    );
+    options.push('="CCModLoader.toggleSaveHack()">Save Injection</a>');
     options.push(
       // '<label>Modifies your bakery name to include a "hack" that loads CC Mod Loader automatically when your file loads.</label>'
       "<label>Saves CC Mod Loader onto your save file so it's automatically loaded when your file loads.</label>"
@@ -134,6 +134,11 @@ CCModLoader.launch = function () {
     var btn = document.getElementById("CCModLoader-savehack");
     if (btn)
       btn.className = "option" + (CCModLoader.config.saveHack ? "" : " off");
+    CCModLoader.Tick();
+  };
+
+  CCModLoader.Tick = function () {
+    PlaySound("snd/tick.mp3");
   };
 
   CCModLoader.countNotif = function () {
