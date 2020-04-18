@@ -13,7 +13,7 @@ CCModLoader.dev = true;
 CCModLoader.repoURL = "https://faynealdan.github.io/CCModLoader/";
 CCModLoader.baseURL = repoURL + (dev ? "dev" : "stable") + "/";
 CCModLoader.modURL = repoURL + (dev ? "dev" : "") + "CCModLoader.js";
-CCModLoader.optionsURL = baseURL + "/options.html";
+CCModLoader.optionsURL = baseURL + "/config.html";
 
 CCModLoader.launch = function () {
   CCModLoader.init = function () {
