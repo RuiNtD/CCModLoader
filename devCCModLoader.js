@@ -19,6 +19,7 @@ CCModLoader.launch = function () {
     CCModLoader.config = {};
     CCModLoader.loadedMods = [
       "https://klattmose.github.io/CookieClicker/CCSE.js",
+      CCModLoader.modURL,
     ];
 
     if (Game.bakeryName.toUpperCase().substr(0, 4) == "<IMG") {
@@ -108,6 +109,20 @@ CCModLoader.launch = function () {
         '<div class="listing"><b>Mods loaded :</b> ' +
           CCModLoader.modCount +
           "</div>"
+      );
+    });
+    Game.customInfoMenu.push(function () {
+      CCSE.PrependCollapsibleInfoMenu(
+        "Loaded mods (" + CCModLoader.name + ")",
+        CCModLoader.loadedMods
+          .map(function (mod) {
+            return (
+              '<div class="listing">' +
+              mod.replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+              "</div>"
+            );
+          })
+          .join("")
       );
     });
   };
