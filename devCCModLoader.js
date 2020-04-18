@@ -123,6 +123,8 @@ CCModLoader.launch = function () {
       // '<label>Modifies your bakery name to include a "hack" that loads CC Mod Loader automatically when your file loads.</label>'
       "<label>Saves CC Mod Loader onto your save file so it's automatically loaded when your file loads.</label>"
     );
+    options.push("<br/>");
+    options.push("Mod list will eventually go here. Not yet implemented!");
     options.push("</div>");
     return options.join("");
   };
