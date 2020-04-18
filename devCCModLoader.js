@@ -102,8 +102,8 @@ CCModLoader.launch = function () {
 
   CCModLoader.countNotif = function () {
     var count = CCModLoader.modCount;
-    var notif = "Loading " + count + " mod...";
-    if (count > 1) notif = "Loading " + count + " mods...";
+    var notif = "Loading " + count + " mods...";
+    if (count == 1) notif = "Loading " + count + " mod...";
     if (Game.prefs.popups) Game.Popup(notif);
     else Game.Notify(CCModLoader.name, notif, [16, 5], 5);
   };
