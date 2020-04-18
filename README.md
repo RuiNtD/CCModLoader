@@ -1,3 +1,8 @@
+# Cookie Clicker Mod Loader
+
+This mod adds a menu to Cookie Clicker to allow automatic managing of mods.
+Config can be accessed via a mods button added on the top bar, next to the Twitter link.
+
 ## Downloads
 
 | Version     | Script URL                  | Userscript                        |
