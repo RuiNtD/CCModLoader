@@ -1,4 +1,6 @@
-$ = document.querySelector;
+function l(what) {
+  return document.getElementById(what);
+}
 
 if (window.addEventListener)
   window.addEventListener("message", handleMessage, false);
@@ -16,34 +18,36 @@ function handleMessage(e) {
       handleLoad(e.data.data);
       break;
   }
-  e.source.postMessage("Message received", e.origin);
 }
 
 function handleLoad(data) {
-  let rawoptions = $("#rawoptions");
-  rawoptions.value = JSON.stringify(data, null, 2);
+  console.log("handleLoad", data);
+  if (!data) return;
+  l("rawoptions").value = JSON.stringify(data, null, 2);
 }
 
 function sendMessage(type, data) {
+  console.log("sendMessage", type, data);
   parent.postMessage({ type: type, data: data }, "*");
 }
 
-$("#save").onClick = function () {
-  let rawoptions = $("#rawoptions");
-  let data = JSON.parse(rawoptions.value);
+l("save").onclick = function () {
+  let data = JSON.parse(l("rawoptions").value);
   sendMessage("save", data);
   handleLoad(data);
 };
 
-$("#forcesave").onClick = function () {
-  $("#save").onClick();
+l("forcesave").onclick = function () {
+  l("save").onclick();
   sendMessage("forceSave");
 };
 
-$("#load").onClick = function () {
+l("load").onclick = function () {
   sendMessage("load");
 };
 
-$("#default").onClick = function () {
+l("default").onclick = function () {
   sendMessage("default");
 };
+
+sendMessage("load");

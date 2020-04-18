@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <title>CC Mod Loader Config Test</title>
+    <style>
+      #message,
+      button,
+      iframe {
+        width: 100%;
+        resize: vertical;
+      }
+      iframe {
+        width: 100%;
+        border: none;
+        resize: vertical;
+      }
+      #messages textarea {
+        width: 100%;
+        resize: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <fieldset>
+      <legend>Options</legend>
+      <iframe id="options" src="options.html"></iframe>
+    </fieldset>
+    <fieldset>
+      <legend>Send Message</legend>
+      <textarea id="message">
+{
+  "type": "load",
+  "data": {
+    "autoLoad": true,
+    "saveHack": false,
+    "cacheBypass": false,
+    "mods": []
+  }
+}</textarea
+      >
+      <button id="send">Send</button>
+    </fieldset>
+
+    <fieldset id="messages">
+      <legend>Received Messages</legend>
+    </fieldset>
+
+    <script>
+      function l(what) {
+        return document.getElementById(what);
+      }
+
+      if (window.addEventListener)
+        window.addEventListener("message", handleMessage, false);
+      else if (window.attachEvent)
+        // ie8
+        window.attachEvent("onmessage", handleMessage);
+
+      function handleMessage(e) {
+        console.log("handleMessage", e);
+        if (!e.data) return;
+        let textarea = document.createElement("textarea");
+        let val = JSON.stringify(e.data, null, 2);
+        textarea.readOnly = true;
+        textarea.value = val;
+        textarea.rows = val.split("\n").length;
+        l("messages").prepend(textarea);
+      }
+
+      l("send").onclick = function () {
+        let data = JSON.parse(l("message").value);
+        console.log("postMessage", data);
+        l("options").contentWindow.postMessage(data, "*");
+      };
+    </script>
+  </body>
+</html>
