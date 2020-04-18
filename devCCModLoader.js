@@ -8,6 +8,8 @@ if (typeof CCSE == "undefined")
 CCModLoader.name = "CC Mod Loader";
 CCModLoader.version = "1.0-dev";
 CCModLoader.GameVersion = "2.022";
+CCModLoader.modURL =
+  "https://faynealdan.github.io/CCModLoader/devCCModLoader.js";
 
 CCModLoader.launch = function () {
   CCModLoader.init = function () {
@@ -18,6 +20,23 @@ CCModLoader.launch = function () {
       "https://klattmose.github.io/CookieClicker/CCSE.js",
     ];
 
+    if (Game.bakeryName.toUpperCase().substr(0, 4) == "<IMG") {
+      var temp = Game.bakeryName;
+      var s = temp.indexOf('"') + 1;
+      var e = temp.indexOf('"', s);
+
+      Game.bakeryName = temp.substr(s, e - s);
+      Game.bakeryNameRefresh();
+    }
+
+    eval(
+      "Game.WriteSave = " +
+        Game.WriteSave.toString().replace(
+          "Game.bakeryName",
+          "CCModLoader.GetBakeryNameForSaving()"
+        )
+    );
+
     CCModLoader.loadConfig();
     CCSE.customLoad.push(CCModLoader.loadConfig);
     CCSE.customSave.push(CCModLoader.saveConfig);
@@ -26,6 +45,16 @@ CCModLoader.launch = function () {
 
     CCModLoader.ReplaceGameMenu();
     CCModLoader.countNotif();
+  };
+
+  CCModLoader.GetBakeryNameForSaving = function () {
+    return !CCModLoader.config.saveHack
+      ? Game.bakeryName
+      : '<IMG src="' +
+          Game.bakeryName +
+          '" onerror=\'Game.LoadMod("' +
+          CCModLoader.modURL +
+          "\")' />";
   };
 
   CCModLoader.loadMods = function () {
@@ -58,6 +87,7 @@ CCModLoader.launch = function () {
   CCModLoader.defaultConfig = function () {
     return {
       autoLoad: true,
+      saveHack: false,
       mods: [],
     };
   };
@@ -98,6 +128,7 @@ CCModLoader.launch = function () {
         '<a class="option" id="" ' + Game.clickStr + '="' + callback + '"></a>'
       );
     };
+    return '<div class="listing">Placeholder options menu</div>';
   };
 
   CCModLoader.countNotif = function () {
