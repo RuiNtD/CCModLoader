@@ -98,19 +98,9 @@ CCModLoader.launch = function () {
         CCModLoader.name,
         CCModLoader.getOptionsMenu()
       );
-      CCSE.AppendCollapsibleOptionsMenu(
-        "CC Mod Loader: klattmose's Mods",
-        "placeholder"
-      );
     });
     Game.customStatsMenu.push(function () {
       CCSE.AppendStatsVersionNumber(CCModLoader.name, CCModLoader.version);
-      /*var div = document.createElement("div");
-      div.className = "listing";
-      var lead = document.createElement("b");
-      lead.innerText = "<b>Mods loaded :";
-      div.appendChild(lead);
-      div.appendChild(document.createTextNode(" " + CCModLoader.modCount));*/
       CCSE.AppendStatsGeneral(
         '<div class="listing"><b>Mods loaded :</b> ' +
           CCModLoader.modCount +
