@@ -117,7 +117,7 @@ CCModLoader.launch = function () {
         CCModLoader.loadedMods
           .map(function (mod) {
             return (
-              '<div class="listing">' +
+              '<div class="listing" style="font-family:monospace">' +
               mod.replace(/</g, "&lt;").replace(/>/g, "&gt;") +
               "</div>"
             );
