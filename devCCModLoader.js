@@ -111,7 +111,7 @@ CCModLoader.launch = function () {
 
   CCModLoader.getOptionsMenu = function () {
     var options = [];
-    //options.push('<div class="listing">Placeholder options menu</div>');
+    options.push('<div class="listing">');
     options.push('<a class="option');
     if (!CCModLoader.config.saveHack) options.push(" off");
     options.push(" " + Game.clickStr);
@@ -122,6 +122,7 @@ CCModLoader.launch = function () {
       // '<label>Modifies your bakery name to include a "hack" that loads CC Mod Loader automatically when your file loads.</label>'
       "<label>Saves CC Mod Loader onto your save file so it's automatically loaded when your file loads.</label>"
     );
+    options.push("</div>");
     return options.join("");
   };
 
