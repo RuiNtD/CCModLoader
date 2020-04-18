@@ -114,7 +114,7 @@ CCModLoader.launch = function () {
     options.push('<div class="listing">');
     options.push('<a class="option');
     if (!CCModLoader.config.saveHack) options.push(" off");
-    options.push(" " + Game.clickStr);
+    options.push('" ' + Game.clickStr);
     options.push(
       "=\"CCModLoader.toggleSaveHack(); PlaySound('snd/tick.mp3');\">Save Injection</a>"
     );
