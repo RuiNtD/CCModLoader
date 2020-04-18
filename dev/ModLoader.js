@@ -10,11 +10,12 @@ if (CCModLoader === undefined) var CCModLoader = {};
 if (typeof CCSE == "undefined")
   Game.LoadMod("https://klattmose.github.io/CookieClicker/CCSE.js");
 CCModLoader.dev = true;
-CCModLoader.repoURL = "https://faynealdan.github.io/CCModLoader/";
-CCModLoader.baseURL = CCModLoader.repoURL + (dev ? "dev" : "stable") + "/";
+CCModLoader.baseURL = "https://faynealdan.github.io/CCModLoader/";
+CCModLoader.fileURL =
+  CCModLoader.baseURL + (CCModLoader.dev ? "dev" : "stable") + "/";
 CCModLoader.modURL =
-  CCModLoader.repoURL + (dev ? "dev" : "") + "CCModLoader.js";
-CCModLoader.optionsURL = CCModLoader.baseURL + "/config.html";
+  CCModLoader.baseURL + (CCModLoader.dev ? "dev" : "") + "CCModLoader.js";
+CCModLoader.optionsURL = CCModLoader.fileURL + "config.html";
 
 CCModLoader.launch = function () {
   CCModLoader.init = function () {

@@ -3,4 +3,4 @@
  * At some point I may bundle all the files together.
  */
 
-Game.LoadMod("https://faynealdan.github.io/CCModLoader/stable/CCModLoader.js");
+Game.LoadMod("https://faynealdan.github.io/CCModLoader/stable/ModLoader.js");
