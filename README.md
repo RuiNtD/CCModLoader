@@ -1,7 +1,3 @@
-# CC Mod Loader
-
-Cookie Clicker Mod Loader
-
 ## Downloads
 
 | Version     | Script URL                  | Userscript                        |
