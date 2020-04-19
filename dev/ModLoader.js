@@ -38,8 +38,6 @@ CCModLoader.launch = function () {
     Game.customSave.push(CCModLoader.saveConfig);
 
     CCModLoader.loadMods();
-
-    CCModLoader.ReplaceGameMenu();
     CCModLoader.countNotif();
   };
 
