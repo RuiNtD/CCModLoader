@@ -5,10 +5,7 @@
  * At some point I may bundle all the files together.
  */
 
-Game.Win("Third-party");
 if (CCModLoader === undefined) var CCModLoader = {};
-if (typeof CCSE == "undefined")
-  Game.LoadMod("https://klattmose.github.io/CookieClicker/CCSE.js");
 CCModLoader.dev = true;
 CCModLoader.baseURL = "https://faynealdan.github.io/CCModLoader/";
 CCModLoader.fileURL =
@@ -22,19 +19,9 @@ CCModLoader.launch = function () {
     CCModLoader.isLoaded = true;
     CCModLoader.modCount = 0;
     CCModLoader.config = {};
-    CCModLoader.loadedMods = [
-      "https://klattmose.github.io/CookieClicker/CCSE.js",
-      CCModLoader.modURL,
-    ];
+    CCModLoader.loadedMods = [CCModLoader.modURL];
 
-    if (Game.bakeryName.toUpperCase().substr(0, 4) == "<IMG") {
-      var temp = Game.bakeryName;
-      var s = temp.indexOf('"') + 1;
-      var e = temp.indexOf('"', s);
-
-      Game.bakeryName = temp.substr(s, e - s);
-      Game.bakeryNameRefresh();
-    }
+    CCModLoader.fixName();
 
     eval(
       "Game.WriteSave = " +
@@ -65,26 +52,37 @@ CCModLoader.launch = function () {
     topBar.insertBefore(div, before);
     Game.attachTooltip(
       l("topbarCCModLoader"),
-      '<div style="padding:8px;width:250px;text-align:center;">Configure your mods loaded by CC Mod Loader.</div>',
+      '<div style="padding:8px;width:250px;text-align:center;">Configure CC Mod Loader</div>',
       "this"
     );
     Game.customChecks.push(function () {
+      CCModLoader.fixName();
       let count = CCModLoader.modCount;
-      l("topbarCCModLoader").innerHTML = `<b>${count}</b> mod${
+      let btn = l("topbarCCModLoader");
+      btn.innerHTML = `<b style="font-weight:bold">${count}</b> mod${
         count == 1 ? "" : "s"
       }`;
     });
   };
 
+  CCModLoader.fixName = function () {
+    if (Game.bakeryName.toUpperCase().substr(0, 4) == "<IMG") {
+      let temp = Game.bakeryName;
+      let s = temp.indexOf('"') + 1;
+      let e = temp.indexOf('"', s);
+
+      Game.bakeryName = decodeURI(temp.substr(s, e - s));
+      Game.bakeryNameRefresh();
+    }
+  };
+
   CCModLoader.GetBakeryNameForSaving = function () {
-    return !CCModLoader.config.saveHack
-      ? Game.bakeryName
-      : '<IMG src="' +
-          Game.bakeryName +
-          '" onerror=\'Game.LoadMod("' +
-          CCModLoader.modURL +
-          (CCModLoader.config.cacheBypass ? "?" + Math.random() : "") +
-          "\")' />";
+    let url = CCModLoader.modURL;
+    let name = encodeURI(Game.bakerName);
+    if (CCModLoader.config.cacheBypass) url += "?" + Math.random();
+    return CCModLoader.config.saveHack
+      ? `<IMG alt="${name}" src="" onerror="Game.LoadMod('${url}')" />`
+      : Game.bakeryName;
   };
 
   CCModLoader.loadMods = function () {
@@ -126,38 +124,6 @@ CCModLoader.launch = function () {
     };
   };
 
-  CCModLoader.ReplaceGameMenu = function () {
-    Game.customOptionsMenu.push(function () {
-      CCSE.AppendCollapsibleOptionsMenu(
-        "CC Mod Loader",
-        CCModLoader.getOptionsMenu()
-      );
-    });
-    Game.customStatsMenu.push(function () {
-      CCSE.AppendStatsGeneral(
-        '<div class="listing"><b>Mods loaded :</b> ' +
-          CCModLoader.modCount +
-          "</div>"
-      );
-    });
-    Game.customInfoMenu.push(function () {
-      CCSE.PrependCollapsibleInfoMenu(
-        "Loaded mods",
-        CCModLoader.loadedMods
-          .map(function (mod) {
-            mod = replaceAll("<", "&lt;", mod);
-            mod = replaceAll(">", "&gt;", mod);
-            return (
-              '<div class="listing" style="font-family:monospace">' +
-              mod +
-              "</div>"
-            );
-          })
-          .join("")
-      );
-    });
-  };
-
   CCModLoader.getOptionsMenu = function () {
     var options = [];
     options.push('<div class="listing">');
@@ -173,18 +139,6 @@ CCModLoader.launch = function () {
     options.push("Mod list will eventually go here. Not yet implemented!");
     options.push("</div>");
     return options.join("");
-  };
-
-  CCModLoader.toggleSaveHack = function () {
-    CCModLoader.config.saveHack = !CCModLoader.config.saveHack;
-    var btn = l("CCModLoader-savehack");
-    if (btn)
-      btn.className = "option" + (CCModLoader.config.saveHack ? "" : " off");
-    CCModLoader.Tick();
-  };
-
-  CCModLoader.Tick = function () {
-    PlaySound("snd/tick.mp3");
   };
 
   CCModLoader.countNotif = function () {
@@ -207,11 +161,4 @@ CCModLoader.launch = function () {
   CCModLoader.init();
 };
 
-if (!CCModLoader.isLoaded) {
-  if (CCSE && CCSE.isLoaded) CCModLoader.launch();
-  else {
-    if (!CCSE) var CCSE = {};
-    if (!CCSE.postLoadHooks) CCSE.postLoadHooks = [];
-    CCSE.postLoadHooks.push(CCModLoader.launch);
-  }
-}
+if (!CCModLoader.isLoaded) CCModLoader.launch();
