@@ -77,7 +77,7 @@ CCModLoader.launch = function () {
 
   CCModLoader.GetBakeryNameForSaving = function () {
     let url = CCModLoader.modURL;
-    let name = encodeURI(Game.bakerName);
+    let name = encodeURI(Game.bakeryName);
     if (CCModLoader.config.cacheBypass) url += "?" + Math.random();
     return CCModLoader.config.saveHack
       ? `<IMG alt="${name}" src="" onerror="Game.LoadMod('${url}')" />`
