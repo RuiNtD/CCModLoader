@@ -21,8 +21,6 @@ CCModLoader.launch = function () {
     CCModLoader.config = {};
     CCModLoader.loadedMods = [CCModLoader.modURL];
 
-    CCModLoader.doCheck();
-
     eval(
       "Game.WriteSave = " +
         Game.WriteSave.toString().replace(
@@ -32,6 +30,7 @@ CCModLoader.launch = function () {
     );
 
     CCModLoader.addButton();
+    CCModLoader.doCheck();
 
     CCModLoader.loadConfig();
     Game.customLoad.push(CCModLoader.loadConfig);
