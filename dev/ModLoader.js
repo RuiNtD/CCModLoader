@@ -70,14 +70,14 @@ CCModLoader.launch = function () {
       let s = temp.indexOf('"') + 1;
       let e = temp.indexOf('"', s);
 
-      Game.bakeryName = decodeURI(temp.substr(s, e - s));
+      Game.bakeryName = temp.substr(s, e - s);
       Game.bakeryNameRefresh();
     }
   };
 
   CCModLoader.GetBakeryNameForSaving = function () {
+    let name = Game.bakeryName;
     let url = CCModLoader.modURL;
-    let name = encodeURI(Game.bakeryName);
     if (CCModLoader.config.cacheBypass) url += "?" + Math.random();
     return CCModLoader.config.saveHack
       ? `<IMG alt="${name}" src="" onerror="Game.LoadMod('${url}')" />`
