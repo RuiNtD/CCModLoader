@@ -21,7 +21,7 @@ CCModLoader.launch = function () {
     CCModLoader.config = {};
     CCModLoader.loadedMods = [CCModLoader.modURL];
 
-    CCModLoader.fixName();
+    CCModLoader.doCheck();
 
     eval(
       "Game.WriteSave = " +
@@ -55,14 +55,16 @@ CCModLoader.launch = function () {
       '<div style="padding:8px;width:250px;text-align:center;">Configure CC Mod Loader</div>',
       "this"
     );
-    Game.customChecks.push(function () {
-      CCModLoader.fixName();
-      let count = CCModLoader.modCount;
-      let btn = l("topbarCCModLoader");
-      btn.innerHTML = `<b style="font-weight:bold">${count}</b> mod${
-        count == 1 ? "" : "s"
-      }`;
-    });
+    Game.customChecks.push(CCModLoader.doCheck);
+  };
+
+  CCModLoader.doCheck = function () {
+    CCModLoader.fixName();
+    let count = CCModLoader.modCount;
+    let btn = l("topbarCCModLoader");
+    btn.innerHTML = `<b style="font-weight:bold">${count}</b> mod${
+      count == 1 ? "" : "s"
+    }`;
   };
 
   CCModLoader.fixName = function () {
