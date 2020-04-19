@@ -37,6 +37,7 @@ CCModLoader.launch = function () {
     Game.customSave.push(CCModLoader.saveConfig);
 
     CCModLoader.loadMods();
+    CCModLoader.doCheck();
     CCModLoader.countNotif();
   };
 
